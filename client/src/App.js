@@ -22,12 +22,12 @@ class App extends Component {
       js: ""
     };
 
-    this.pusher = new Pusher("18160601861a89d7f8f7", {
-      cluster: "eu",
-      forceTLS: true
-    });
+    // this.pusher = new Pusher("18160601861a89d7f8f7", {
+    //   cluster: "eu",
+    //   forceTLS: true
+    // });
 
-    this.channel = this.pusher.subscribe("editor");
+    // this.channel = this.pusher.subscribe("editor");
   }
 
   componentDidUpdate() {
@@ -39,24 +39,24 @@ class App extends Component {
       id: pushid()
     });
 
-    this.channel.bind("text-update", data => {
-      const { id } = this.state;
-      if (data.id === id) return;
-
-      this.setState({
-        html: data.html,
-        css: data.css,
-        js: data.js
-      });
-    });
+    // this.channel.bind("text-update", data => {
+    //   const { id } = this.state;
+    //   if (data.id === id) return;
+    //
+    //   this.setState({
+    //     html: data.html,
+    //     css: data.css,
+    //     js: data.js
+    //   });
+    // });
   }
 
   syncUpdates = () => {
-    const data = { ...this.state };
-
-    axios
-      .post("http://localhost:5000/update-editor", data)
-      .catch(console.error);
+    // const data = { ...this.state };
+    //
+    // axios
+    //   .post("http://localhost:5000/update-editor", data)
+    //   .catch(console.error);
   };
 
   runCode = () => {

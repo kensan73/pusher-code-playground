@@ -4,6 +4,8 @@ import Pusher from "pusher-js";
 import pushid from "pushid";
 import axios from "axios";
 
+import Editor from './Editor'
+
 import "./App.css";
 import "codemirror/lib/codemirror.css";
 import "codemirror/theme/material.css";
@@ -103,45 +105,15 @@ class App extends Component {
     return (
       <div className="App">
         <section className="playground">
-          <div className="code-editor html-code">
-            <div className="editor-header">HTML</div>
-            <CodeMirror
-              value={html}
-              options={{
-                mode: "htmlmixed",
-                ...codeMirrorOptions
-              }}
-              onBeforeChange={(editor, data, html) => {
-                this.setState({ html }, () => this.syncUpdates());
-              }}
-            />
-          </div>
-          <div className="code-editor css-code">
-            <div className="editor-header">CSS</div>
-            <CodeMirror
-              value={css}
-              options={{
-                mode: "css",
-                ...codeMirrorOptions
-              }}
-              onBeforeChange={(editor, data, css) => {
-                this.setState({ css }, () => this.syncUpdates());
-              }}
-            />
-          </div>
-          <div className="code-editor js-code">
-            <div className="editor-header">JavaScript</div>
-            <CodeMirror
-              value={js}
-              options={{
-                mode: "javascript",
-                ...codeMirrorOptions
-              }}
-              onBeforeChange={(editor, data, js) => {
-                this.setState({ js }, () => this.syncUpdates());
-              }}
-            />
-          </div>
+          <Editor className='html-code' codeMirrorOptions={codeMirrorOptions} header='HTML' mode='htmlmixed' onBeforeChange={(editor, data, html) => {
+            this.setState({ html }, () => this.syncUpdates());
+          }} value={html} />
+          <Editor className='css-code' codeMirrorOptions={codeMirrorOptions} header='CSS' onBeforeChange={(editor, data, css) => {
+            this.setState({ css }, () => this.syncUpdates());
+          }} mode='css' value={css} />
+          <Editor className='js-code' codeMirrorOptions={codeMirrorOptions} header='JavaScript'               onBeforeChange={(editor, data, js) => {
+            this.setState({ js }, () => this.syncUpdates());
+          }} mode='javascript' value={js} />
         </section>
         <section className="result">
           <iframe title="result" className="iframe" ref="iframe" />

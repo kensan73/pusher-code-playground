@@ -39,21 +39,22 @@
     -->
   <script type="application/javascript">
     function setupVerticalResizer() {
-      window.resizerInfo = {
+      let _ = window.resizerInfo = {
         resizer: document.getElementById('vertical-resizer'),
         x: 0,
         y: 0,
         leftWidth: 0,
       }
-      window.resizerInfo.leftSide = window.resizerInfo.resizer.previousElementSibling
-      window.resizerInfo.rightSide = window.resizerInfo.resizer.nextElementSibling
+      _.leftSide = _.resizer.previousElementSibling
+      _.rightSide = _.resizer.nextElementSibling
     }
 
     function mouseMoveHandler(e) {
-      let resizer = window.resizerInfo.resizer;
-      let leftSide = window.resizerInfo.leftSide;
-      let rightSide = window.resizerInfo.rightSide;
-      let leftWidth = window.resizerInfo.leftWidth;
+      let _ = window.resizerInfo;
+      let resizer = _.resizer;
+      let leftSide = _.leftSide;
+      let rightSide = _.rightSide;
+      let leftWidth = _.leftWidth;
 
       resizer.style.cursor = 'col-resize';
       leftSide.style.userSelect = 'none';
@@ -63,23 +64,24 @@
       rightSide.style.pointerEvents = 'none';
 
       // How far the mouse has been moved
-      const dx = e.clientX - window.resizerInfo.x;
+      const dx = e.clientX - _.x;
       if(dx === 0) return
       console.log('dx ' + dx)
 
-      const dy = e.clientY - window.resizerInfo.y;
+      const dy = e.clientY - _.y;
 
       const newLeftWidth = (leftWidth + dx);
       console.log('nlw ' + newLeftWidth)
-      window.resizerInfo.leftSide.setAttribute('style', `width: ${newLeftWidth}px`);
-      window.resizerInfo.resizer.setAttribute('style', `left: ${newLeftWidth + 1}px`);
-      window.resizerInfo.rightSide.setAttribute('style', `left: ${newLeftWidth + 1 + 5}px`);
+      _.leftSide.setAttribute('style', `width: ${newLeftWidth}px`);
+      _.resizer.setAttribute('style', `left: ${newLeftWidth + 1}px`);
+      _.rightSide.setAttribute('style', `left: ${newLeftWidth + 1 + 5}px`);
     }
 
     const mouseUpHandler = function() {
-      let resizer = window.resizerInfo.resizer;
-      let leftSide = window.resizerInfo.leftSide;
-      let rightSide = window.resizerInfo.rightSide;
+      let _ = window.resizerInfo;
+      let resizer = _.resizer;
+      let leftSide = _.leftSide;
+      let rightSide = _.rightSide;
       resizer.style.removeProperty('cursor');
       document.body.style.removeProperty('cursor');
 

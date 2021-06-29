@@ -8,7 +8,14 @@ import "codemirror/mode/htmlmixed/htmlmixed";
 import "codemirror/mode/css/css";
 import "codemirror/mode/javascript/javascript";
 
-const Editor = ({className, onBeforeChange, codeMirrorOptions, mode, value, header}) => (
+const codeMirrorOptions = {
+    theme: "material",
+    lineNumbers: true,
+    scrollbarStyle: null,
+    lineWrapping: true
+};
+
+const Editor = ({className, onBeforeChange, mode, value, header}) => (
     <div className={`code-editor ${className}`}>
         <div className="editor-header">{header}</div>
         <CodeMirror

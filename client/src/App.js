@@ -95,26 +95,21 @@ class App extends Component {
 
   render() {
     const { html, js, css } = this.state;
-    const codeMirrorOptions = {
-      theme: "material",
-      lineNumbers: true,
-      scrollbarStyle: null,
-      lineWrapping: true
-    };
 
     return (
       <div className="App">
         <section className="playground">
-          <Editor className='html-code' codeMirrorOptions={codeMirrorOptions} header='HTML' mode='htmlmixed' onBeforeChange={(editor, data, html) => {
+          <Editor className='html-code' header='HTML' onBeforeChange={(editor, data, html) => {
             this.setState({ html }, () => this.syncUpdates());
-          }} value={html} />
-          <Editor className='css-code' codeMirrorOptions={codeMirrorOptions} header='CSS' onBeforeChange={(editor, data, css) => {
+          }} mode='htmlmixed' value={html} />
+          <Editor className='css-code' header='CSS' onBeforeChange={(editor, data, css) => {
             this.setState({ css }, () => this.syncUpdates());
           }} mode='css' value={css} />
-          <Editor className='js-code' codeMirrorOptions={codeMirrorOptions} header='JavaScript'               onBeforeChange={(editor, data, js) => {
+          <Editor className='js-code' header='JavaScript' onBeforeChange={(editor, data, js) => {
             this.setState({ js }, () => this.syncUpdates());
           }} mode='javascript' value={js} />
         </section>
+        <div className='resizer' id='vertical-resizer' />
         <section className="result">
           <iframe title="result" className="iframe" ref="iframe" />
         </section>

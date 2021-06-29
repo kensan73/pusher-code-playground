@@ -38,12 +38,23 @@ html {
   overflow: auto;
 }
 
-.result {
+.resizer {
   position: fixed;
   top: 0;
   right: 0;
   bottom: 0;
   left: 600px;
+  width: 5px;
+  overflow: hidden;
+  border-left: 3px solid #cdcdcd;
+}
+
+.result {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 605px;
   overflow: hidden;
 }
 

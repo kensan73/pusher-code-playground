@@ -37,5 +37,78 @@
       To begin the development, run `npm start` or `yarn start`.
       To create a production bundle, use `npm run build` or `yarn build`.
     -->
+  <script type="application/javascript">
+    function setupVerticalResizer() {
+      window.resizerInfo = {
+        resizer: document.getElementById('vertical-resizer'),
+        x: 0,
+        y: 0,
+        leftWidth: 0,
+      }
+      window.resizerInfo.leftSide = window.resizerInfo.resizer.previousElementSibling
+      window.resizerInfo.rightSide = window.resizerInfo.resizer.nextElementSibling
+    }
+
+    function mouseMoveHandler(e) {
+      let resizer = window.resizerInfo.resizer;
+      let leftSide = window.resizerInfo.leftSide;
+      let rightSide = window.resizerInfo.rightSide;
+      let leftWidth = window.resizerInfo.leftWidth;
+
+      resizer.style.cursor = 'col-resize';
+      leftSide.style.userSelect = 'none';
+      leftSide.style.pointerEvents = 'none';
+
+      rightSide.style.userSelect = 'none';
+      rightSide.style.pointerEvents = 'none';
+
+      // How far the mouse has been moved
+      const dx = e.clientX - window.resizerInfo.x;
+      if(dx === 0) return
+      console.log('dx ' + dx)
+
+      const dy = e.clientY - window.resizerInfo.y;
+
+      const newLeftWidth = (leftWidth + dx);
+      console.log('nlw ' + newLeftWidth)
+      window.resizerInfo.leftSide.setAttribute('style', `width: ${newLeftWidth}px`);
+      window.resizerInfo.resizer.setAttribute('style', `left: ${newLeftWidth + 1}px`);
+      window.resizerInfo.rightSide.setAttribute('style', `left: ${newLeftWidth + 1 + 5}px`);
+    }
+
+    const mouseUpHandler = function() {
+      let resizer = window.resizerInfo.resizer;
+      let leftSide = window.resizerInfo.leftSide;
+      let rightSide = window.resizerInfo.rightSide;
+      resizer.style.removeProperty('cursor');
+      document.body.style.removeProperty('cursor');
+
+      leftSide.style.removeProperty('user-select');
+      leftSide.style.removeProperty('pointer-events');
+
+      rightSide.style.removeProperty('user-select');
+      rightSide.style.removeProperty('pointer-events');
+
+      // Remove the handlers of `mousemove` and `mouseup`
+      document.removeEventListener('mousemove', mouseMoveHandler);
+      document.removeEventListener('mouseup', mouseUpHandler);
+    };
+
+    window.onload = function() {
+      setupVerticalResizer()
+      const mouseDownHandler = function(e) {
+        // Get the current mouse position
+        window.resizerInfo.x = e.clientX;
+        window.resizerInfo.y = e.clientY;
+        window.resizerInfo.leftWidth = window.resizerInfo.leftSide.getBoundingClientRect().width;
+
+        // Attach the listeners to `document`
+        document.addEventListener('mousemove', mouseMoveHandler);
+        document.addEventListener('mouseup', mouseUpHandler);
+      };
+
+      window.resizerInfo.resizer.addEventListener('mousedown', mouseDownHandler);
+    }
+  </script>
   </body>
 </html>
